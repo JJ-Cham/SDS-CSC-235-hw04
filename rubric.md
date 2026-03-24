@@ -24,7 +24,7 @@ __ 3 pts: Appropriate visual encoding of data
 
 __ 3 pts: At least two different types of interaction 
 
-__ 3 pts: Meaningfully supports network analysis, geospatial analysis, visualizing uncertainty, or real-time bias mitigation  
+__ 3 pts: Meaningfully supports network analysis, **geospatial analysis**, visualizing uncertainty, or real-time bias mitigation  
 
 __ 1 pt: Sketch 
 
