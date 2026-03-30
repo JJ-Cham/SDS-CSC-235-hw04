@@ -36,14 +36,14 @@ __ 1 pt: Reasonable adjustment in response to testing
 
 ### General:
 
-__ 1 pt: CSS is in an external file, not coded directly in the `.html` file
+**YES**__ 1 pt: CSS is in an external file, not coded directly in the `.html` file
 
-__ 1 pt: JS is in an external file, not coded directly in the `.html` file
+_**YES**_ 1 pt: JS is in an external file, not coded directly in the `.html` file
 
-__ 1 pt: Completed `rubric.md` included with submission
+_**YES**_ 1 pt: Completed `rubric.md` included with submission
 
 __ 1 pt: Browser compiles code with no errors 
 
-__ 1 pt: Interactive components execute fully and consistently with no errors
+_**YES**_ 1 pt: Interactive components execute fully and consistently with no errors
 
 __ Changelog: Completed `changelog.md` included with submission
