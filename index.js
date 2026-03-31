@@ -54,7 +54,7 @@ function updateZoneStyles() {
 
 // Load US states + GeoJSON zones
 Promise.all([
-  d3.json(),
+  d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json"),
   d3.json("data.geojson")
 ]).then(([us, data]) => {
 
