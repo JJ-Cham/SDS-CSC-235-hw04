@@ -2,8 +2,43 @@ body {
   font-family: Arial, sans-serif;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
+}
+
+#map{
+  height: 600px;
+  width: 960px;
+}
+#barchart {
+  display: block;
+  margin: 0 auto;
+}
+
+.controls {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#resetMap {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #2f6fdf;
+  color: white;
+  cursor: pointer;
+}
+
+#resetMap:hover {
+  background: #1f57b7;
+}
+
+.state-label {
+  font-size: 9px;
+  fill: #444;
+  text-anchor: middle;
+  pointer-events: none;
 }
 
 .tooltip {
@@ -14,3 +49,4 @@ h1 {
   pointer-events: none;
   font-size: 12px;
 }
+
