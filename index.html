@@ -8,15 +8,26 @@
 </head>
 <body>
 
-<h1>COVID-19 Forecast Uncertainty Visualization</h1>
+    <h1>COVID-19 Forecast Uncertainty Visualization</h1>
+    <p>
+      This visualization shows COVID-19 forecast uncertainty using quantiles.
+      The shaded region represents the 10th to 90th percentile range, while the line shows the median prediction.
+    </p>
 
-<label for="dateSelect">Select Date:</label>
-<select id="dateSelect"></select>
+    <h2>Forecast Over Time with Uncertainty</h2>
+    <!-- <svg id="lineChart" width="700" height="400"></svg> -->
+
+    <h2>Quantile Distribution for Selected Date</h2>
+    <svg id="dotPlot" width="700" height="200"></svg>
+
+    <label for="dateSelect">Select Date:</label>
+    <select id="dateSelect"></select>
 
 <div id="container">
     <svg id="lineChart" width="700" height="400"></svg>
     <svg id="dotPlot" width="700" height="200"></svg>
 </div>
+<div id="tooltip" style="position:absolute; opacity:0; background:white; border:1px solid black; padding:5px;"></div>
 
 <script src="index.js"></script>
 </body>

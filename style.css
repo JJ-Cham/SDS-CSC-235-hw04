@@ -28,3 +28,19 @@ svg {
 .dot {
     fill: orange;
 }
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2;
+}
+
+.area {
+    fill: lightblue;
+    opacity: 0.4;
+}
+
+.dot {
+    fill: darkred;
+    opacity: 0.7;
+}
