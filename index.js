@@ -1,236 +1,96 @@
-// const width = 700;
-// const height = 400;
-// const margin = { top: 20, right: 30, bottom: 40, left: 50 };
-
-// const svg = d3.select("#lineChart");
-// const dotSvg = d3.select("#dotPlot");
-
-// d3.csv("2020-03-31-IHME-CurveFit.csv").then(data => {
-//     console.log(data[0]);
-
-//     data.forEach(d => {
-//         d.value = +d.value;
-//         d.quantile = d.quantile ? +d.quantile : null;
-//         d.date = new Date(d.target_end_date);
-//     });
-
-//     // Filter one location (simplify!)
-//     const filtered = data.filter(d => d.type === "quantile");
-
-//     const dates = [...new Set(filtered.map(d => d.target_end_date))];
-
-//     const select = d3.select("#dateSelect");
-
-//     select.selectAll("option")
-//         .data(dates)
-//         .enter()
-//         .append("option")
-//         .text(d => d)
-//         .attr("value", d => d);
-
-//     drawLineChart(filtered);
-//     drawDotPlot(filtered, dates[0]);
-
-//     select.on("change", function () {
-//         drawDotPlot(filtered, this.value);
-//     });
-// });
-
-// function drawLineChart(data) {
-
-//     const median = data.filter(d => d.quantile === 0.5);
-//     const low = data.filter(d => d.quantile === 0.1);
-//     const high = data.filter(d => d.quantile === 0.9);
-
-//     const x = d3.scaleTime()
-//         .domain(d3.extent(median, d => d.date))
-//         .range([50, width - 50]);
-
-//     const y = d3.scaleLinear()
-//         .domain([0, d3.max(high, d => d.value)])
-//         .range([height - 50, 20]);
-
-//     median.sort((a, b) => a.date - b.date);
-//     low.sort((a, b) => a.date - b.date);
-//     high.sort((a, b) => a.date - b.date);
-
-//     const area = d3.area()
-//         .x(d => x(d.date))
-//         .y0((d, i) => y(low[i].value))
-//         .y1((d, i) => y(high[i].value));
-
-//     const line = d3.line()
-//         .x(d => x(d.date))
-//         .y(d => y(d.value));
-
-//     svg.append("path")
-//         .datum(median)
-//         .attr("class", "area")
-//         .attr("d", area);
-
-//     svg.append("path")
-//         .datum(median)
-//         .attr("class", "line")
-//         .attr("d", line);
-
-//     svg.append("g")
-//         .attr("transform", `translate(0,${height - 50})`)
-//         .call(d3.axisBottom(x));
-
-//     svg.append("g")
-//         .attr("transform", `translate(50,0)`)
-//         .call(d3.axisLeft(y));
-
-//     // X Axis Label
-//     svg.append("text")
-//         .attr("x", width / 2)
-//         .attr("y", height)
-//         .attr("text-anchor", "middle")
-//         .text("Date");
-
-//     // Y Axis Label
-//     svg.append("text")
-//         .attr("transform", "rotate(-90)")
-//         .attr("x", -height / 2)
-//         .attr("y", 15)
-//         .attr("text-anchor", "middle")
-//         .text("Predicted Value");
-
-//     svg.selectAll(".hover-dot")
-//     .data(median)
-//     .attr("r", d => d.quantile === 0.5 ? 7 : 4)
-//     .enter()
-//     .append("circle")
-//     .attr("cx", d => x(d.date))
-//     .attr("cy", d => y(d.value))
-//     .attr("r", 4)
-//     .attr("opacity", 0)
-//     .on("mouseover", function (event, d) {
-//         d3.select(this).attr("opacity", 1);
-
-//         d3.select("#tooltip")
-//             .style("opacity", 1)
-//             .html(`Date: ${d.date.toDateString()}<br>Value: ${d.value}`)
-//             .style("left", (event.pageX + 10) + "px")
-//             .style("top", (event.pageY - 20) + "px");
-//     })
-//     .on("mouseout", function () {
-//         d3.select(this).attr("opacity", 0);
-//         d3.select("#tooltip").style("opacity", 0);
-//     });
-// }
-
-// function drawDotPlot(data, selectedDate) {
-
-//     dotSvg.selectAll("*").remove();
-
-//     const filtered = data.filter(d => d.target_end_date === selectedDate && d.quantile !== null);
-
-//     const x = d3.scaleLinear()
-//         .domain(d3.extent(filtered, d => d.value))
-//         .range([50, width - 50]);
-
-//     dotSvg.selectAll("circle")
-//         .data(filtered)
-//         .enter()
-//         .append("circle")
-//         .attr("class", "dot")
-//         .attr("cx", d => x(d.value))
-//         .attr("cy", 100)
-//         .attr("r", 5)
-//         .append("title")
-//         .text(d => `Quantile: ${d.quantile}, Value: ${d.value}`);
-
-//     dotSvg.append("g")
-//         .attr("transform", `translate(0,150)`)
-//         .call(d3.axisBottom(x));
-//     // X Axis Label
-//     dotSvg.append("text")
-//         .attr("x", width / 2)
-//         .attr("y", 190)
-//         .attr("text-anchor", "middle")
-//         .text("Forecast Value");
-
-//     // Title (optional but nice)
-//     dotSvg.append("text")
-//         .attr("x", width / 2)
-//         .attr("y", 20)
-//         .attr("text-anchor", "middle")
-//         .text("Quantile Distribution");
-// }
-
 const width = 700;
 const height = 400;
-const margin = { top: 20, right: 30, bottom: 40, left: 50 };
 
 const svg = d3.select("#lineChart");
 const dotSvg = d3.select("#dotPlot");
 
-// Tooltip
-const tooltip = d3.select("body")
-    .append("div")
-    .attr("id", "tooltip")
-    .style("position", "absolute")
-    .style("opacity", 0)
-    .style("background", "white")
-    .style("border", "1px solid black")
-    .style("padding", "5px");
+// Tooltip (single instance)
+const tooltip = d3.select("#tooltip");
 
-d3.csv("2020-03-31-IHME-CurveFit.csv").then(data => {
+// Load MULTIPLE forecast files
+Promise.all([
+    d3.csv("2024-03-25-COVIDhub-ensemble.csv"),
+    d3.csv("2024-04-01-COVIDhub-ensemble.csv"),
+    d3.csv("2024-04-08-COVIDhub-ensemble.csv")
+]).then(files => {
 
+    console.log("FILES:", files);
+    const data = files.flat();
+
+    // Parse data
     data.forEach(d => {
         d.value = +d.value;
-        d.quantile = d.quantile ? +d.quantile : null;
+        d.quantile = +d.quantile;
         d.date = new Date(d.target_end_date);
+        d.forecast_date = new Date(d.forecast_date);
     });
 
-    // ✅ ONLY keep quantile data + one target
+    // Filter relevant data
     const filtered = data.filter(d =>
         d.type === "quantile" &&
-        d.target.includes("inc hosp")
+        d.target.includes("death") &&
+        d.location === "US"
     );
 
-    // Get unique dates
-    const dates = [...new Set(filtered.map(d => d.target_end_date))];
+    // Dropdown = forecast_date
+    const forecastDates = [...new Set(filtered.map(d => d.forecast_date.getTime()))]
+        .sort((a, b) => a - b);
 
     const select = d3.select("#dateSelect");
 
     select.selectAll("option")
-        .data(dates)
+        .data(forecastDates)
         .enter()
         .append("option")
-        .text(d => d)
+        .text(d => new Date(d).toDateString())
         .attr("value", d => d);
 
-    drawLineChart(filtered);
-    drawDotPlot(filtered, dates[0]);
+    // Initial render
+    const initialDate = forecastDates[0];
+    updateCharts(filtered, initialDate);
 
     // Dropdown interaction
     select.on("change", function () {
-        drawDotPlot(filtered, this.value);
+        updateCharts(filtered, +this.value);
     });
+
+    drawLegend();
 });
+
+function updateCharts(data, selectedForecastDate) {
+
+    const filtered = data.filter(d =>
+        d.forecast_date.getTime() === selectedForecastDate
+    );
+
+    drawLineChart(filtered);
+    drawDotPlot(filtered);
+}
 
 function drawLineChart(data) {
 
     svg.selectAll("*").remove();
 
-    const median = data.filter(d => d.quantile === 0.5);
-    const low = data.filter(d => d.quantile === 0.1);
-    const high = data.filter(d => d.quantile === 0.9);
+    const quantiles = {
+        low: 0.025,
+        mid: 0.5,
+        high: 0.975
+    };
 
-    // Sort to align data
-    median.sort((a, b) => a.date - b.date);
-    low.sort((a, b) => a.date - b.date);
-    high.sort((a, b) => a.date - b.date);
+    const median = data.filter(d => d.quantile === quantiles.mid);
+    const low = data.filter(d => d.quantile === quantiles.low);
+    const high = data.filter(d => d.quantile === quantiles.high);
 
-    // Combine safely for area
-    const areaData = median.map((d, i) => ({
+    // Map for safe alignment
+    const lowMap = new Map(low.map(d => [d.target_end_date, d.value]));
+    const highMap = new Map(high.map(d => [d.target_end_date, d.value]));
+
+    const areaData = median.map(d => ({
         date: d.date,
         value: d.value,
-        low: low[i]?.value,
-        high: high[i]?.value
-    }));
+        low: lowMap.get(d.target_end_date),
+        high: highMap.get(d.target_end_date)
+    })).sort((a, b) => a.date - b.date);
 
     const x = d3.scaleTime()
         .domain(d3.extent(areaData, d => d.date))
@@ -249,17 +109,30 @@ function drawLineChart(data) {
         .x(d => x(d.date))
         .y(d => y(d.value));
 
-    // Uncertainty band
+    // AREA (animated fade-in)
     svg.append("path")
         .datum(areaData)
         .attr("class", "area")
-        .attr("d", area);
+        .attr("d", area)
+        .style("opacity", 0)
+        .transition()
+        .duration(1000)
+        .style("opacity", 0.4);
 
-    // Median line
-    svg.append("path")
+    // LINE (animated draw)
+    const path = svg.append("path")
         .datum(areaData)
         .attr("class", "line")
         .attr("d", line);
+
+    const totalLength = path.node().getTotalLength();
+
+    path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+        .duration(1500)
+        .attr("stroke-dashoffset", 0);
 
     // Axes
     svg.append("g")
@@ -270,67 +143,69 @@ function drawLineChart(data) {
         .attr("transform", `translate(50,0)`)
         .call(d3.axisLeft(y));
 
-    // Axis Labels
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height)
-        .attr("text-anchor", "middle")
-        .text("Date");
+    // Crosshair line
+    const focusLine = svg.append("line")
+        .attr("stroke", "black")
+        .attr("y1", 20)
+        .attr("y2", height - 50)
+        .style("opacity", 0);
 
-    svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -height / 2)
-        .attr("y", 15)
-        .attr("text-anchor", "middle")
-        .text("Predicted Value");
+    // Hover interaction
+    svg.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        .on("mousemove", function (event) {
 
-    // ✅ Hover interaction (SECOND interaction)
-    svg.selectAll(".hover-dot")
-        .data(areaData)
-        .enter()
-        .append("circle")
-        .attr("cx", d => x(d.date))
-        .attr("cy", d => y(d.value))
-        .attr("r", 4)
-        .attr("opacity", 0)
-        .on("mouseover", function (event, d) {
-            d3.select(this).attr("opacity", 1);
+            const [xPos] = d3.pointer(event);
+            const date = x.invert(xPos);
+
+            const bisect = d3.bisector(d => d.date).left;
+            const i = bisect(areaData, date);
+
+            const d = areaData[i];
+            if (!d) return;
+
+            focusLine
+                .attr("x1", x(d.date))
+                .attr("x2", x(d.date))
+                .style("opacity", 1);
 
             tooltip
                 .style("opacity", 1)
-                .html(`Date: ${d.date.toDateString()}<br>Value: ${d.value}`)
+                .html(`
+                    <strong>${d.date.toDateString()}</strong><br>
+                    Median: ${Math.round(d.value)}<br>
+                    Low: ${Math.round(d.low)}<br>
+                    High: ${Math.round(d.high)}
+                `)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 20) + "px");
         })
-        .on("mouseout", function () {
-            d3.select(this).attr("opacity", 0);
+        .on("mouseout", () => {
+            focusLine.style("opacity", 0);
             tooltip.style("opacity", 0);
         });
 }
 
-function drawDotPlot(data, selectedDate) {
+function drawDotPlot(data) {
 
     dotSvg.selectAll("*").remove();
 
-    const filtered = data.filter(d =>
-        d.target_end_date === selectedDate &&
-        d.quantile !== null
-    );
-
     const x = d3.scaleLinear()
-        .domain(d3.extent(filtered, d => d.value))
+        .domain(d3.extent(data, d => d.value))
         .range([50, width - 50]);
 
     dotSvg.selectAll("circle")
-        .data(filtered)
-        .enter()
-        .append("circle")
+        .data(data)
+        .join("circle")
         .attr("class", "dot")
+        .transition()
+        .duration(500)
         .attr("cx", d => x(d.value))
-        .attr("cy", 100)
-        .attr("r", d => d.quantile === 0.5 ? 7 : 4) // highlight median
-        .append("title")
-        .text(d => `Quantile: ${d.quantile}, Value: ${d.value}`);
+        .attr("cy", d => 150 - d.quantile * 120)
+        .attr("r", d => d.quantile === 0.5 ? 7 : 4);
 
     dotSvg.append("g")
         .attr("transform", `translate(0,150)`)
@@ -338,13 +213,43 @@ function drawDotPlot(data, selectedDate) {
 
     dotSvg.append("text")
         .attr("x", width / 2)
-        .attr("y", 190)
-        .attr("text-anchor", "middle")
-        .text("Forecast Value");
-
-    dotSvg.append("text")
-        .attr("x", width / 2)
         .attr("y", 20)
         .attr("text-anchor", "middle")
-        .text(`Quantile Distribution (${selectedDate})`);
+        .text("Quantile Distribution");
+}
+
+function drawLegend() {
+
+    const legend = d3.select("#legend");
+    legend.selectAll("*").remove();
+
+    const items = [
+        { label: "Median (0.5)", color: "#2563eb", type: "line" },
+        { label: "Uncertainty (0.025–0.975)", color: "#93c5fd", type: "area" }
+    ];
+
+    const container = legend.append("div")
+        .style("display", "flex")
+        .style("gap", "20px")
+        .style("align-items", "center")
+        .style("margin", "10px 0");
+
+    const item = container.selectAll(".legend-item")
+        .data(items)
+        .enter()
+        .append("div")
+        .style("display", "flex")
+        .style("align-items", "center")
+        .style("gap", "8px");
+
+    // Color box / line
+    item.append("div")
+        .style("width", "30px")
+        .style("height", d => d.type === "line" ? "4px" : "12px")
+        .style("background", d => d.color)
+        .style("opacity", d => d.type === "area" ? 0.5 : 1);
+
+    // Label
+    item.append("span")
+        .text(d => d.label);
 }

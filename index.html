@@ -1,34 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>COVID-19 Forecast Uncertainty</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
+
+
 <body>
 
     <h1>COVID-19 Forecast Uncertainty Visualization</h1>
     <p>
       This visualization shows COVID-19 forecast uncertainty using quantiles.
-      The shaded region represents the 10th to 90th percentile range, while the line shows the median prediction.
+      The shaded region represents the 2.5th to 97.5th percentile range, while the line shows the median prediction.
     </p>
 
-    <h2>Forecast Over Time with Uncertainty</h2>
-    <!-- <svg id="lineChart" width="700" height="400"></svg> -->
-
-    <h2>Quantile Distribution for Selected Date</h2>
-    <svg id="dotPlot" width="700" height="200"></svg>
-
-    <label for="dateSelect">Select Date:</label>
+    <label for="dateSelect"><strong>Select Forecast Date:</strong></label>
     <select id="dateSelect"></select>
 
-<div id="container">
-    <svg id="lineChart" width="700" height="400"></svg>
-    <svg id="dotPlot" width="700" height="200"></svg>
-</div>
-<div id="tooltip" style="position:absolute; opacity:0; background:white; border:1px solid black; padding:5px;"></div>
+    <div id="container">
+        <h2>Forecast Over Time with Uncertainty</h2>
+        <svg id="lineChart" width="700" height="400"></svg>
 
-<script src="index.js"></script>
+        <!-- Legend goes here -->
+        <div id="legend"></div>
+
+        <h2>Quantile Distribution</h2>
+        <svg id="dotPlot" width="700" height="200"></svg>
+    </div>
+
+    <!-- Tooltip (ONLY ONE) -->
+    <div id="tooltip" style="
+        position:absolute;
+        opacity:0;
+        background:white;
+        border:1px solid black;
+        padding:5px;
+        pointer-events:none;
+    "></div>
+
+    <script src="index.js"></script>
 </body>
-</html>

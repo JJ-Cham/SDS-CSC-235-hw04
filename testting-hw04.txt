@@ -1,0 +1,22 @@
+JJ Cham 
+CSC-235
+HW #4
+
+Two Analysis Tasks 
+
+Identify the time period where forecast uncertainty is the largest.
+Compare how the distribution of predicted values changes across different dates.
+
+Testing Notes
+
+User understood the shaded uncertainty band quickly
+User was confused about what quantiles meant
+Dropdown was intuitive
+Hover tooltip helped interpret values
+
+Adjustment
+
+Added explanation text describing quantiles and uncertainty
+Increased median dot size to make it easier to identify
+
+

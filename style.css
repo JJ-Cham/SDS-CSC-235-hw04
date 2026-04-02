@@ -43,4 +43,35 @@ svg {
 .dot {
     fill: darkred;
     opacity: 0.7;
+} 
+
+.line {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+}
+
+.area {
+    fill: #93c5fd;
+    opacity: 0.4;
+}
+
+.axis path,
+.axis line {
+    stroke: #ccc;
+}
+
+text {
+    font-family: Arial, sans-serif;
+}
+
+.line {
+    fill: none;
+    stroke: #2563eb;
+    stroke-width: 3;
+}
+
+.area {
+    fill: #93c5fd;
+    opacity: 0.4;
 }
