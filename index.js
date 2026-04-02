@@ -9,9 +9,9 @@ const tooltip = d3.select("#tooltip");
 
 // Load MULTIPLE forecast files
 Promise.all([
-    d3.csv("2024-03-25-COVIDhub-ensemble.csv"),
-    d3.csv("2024-04-01-COVIDhub-ensemble.csv"),
-    d3.csv("2024-04-08-COVIDhub-ensemble.csv")
+    d3.csv("2020-04-27-COVIDhub-ensemble.csv"),
+    d3.csv("2020-05-04-COVIDhub-ensemble.csv"),
+    d3.csv("2020-05-11-COVIDhub-ensemble.csv")
 ]).then(files => {
 
     console.log("FILES:", files);
