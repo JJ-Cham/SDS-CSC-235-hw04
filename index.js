@@ -109,6 +109,21 @@ function drawLineChart(data) {
         .x(d => x(d.date))
         .y(d => y(d.value));
 
+    // X-axis label
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 10)
+        .attr("text-anchor", "middle")
+        .text("Target Date");
+
+    // Y-axis label
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", 15)
+        .attr("text-anchor", "middle")
+        .text("Cumulative Deaths");
+
     // AREA (animated fade-in)
     svg.append("path")
         .datum(areaData)
@@ -216,6 +231,17 @@ function drawDotPlot(data) {
         .attr("y", 20)
         .attr("text-anchor", "middle")
         .text("Quantile Distribution");
+
+    dotSvg.append("text")
+    .attr("x", width / 2)
+    .attr("y", 190)
+    .attr("text-anchor", "middle")
+    .text("Predicted Deaths");
+
+    dotSvg.append("text")
+        .attr("x", 10)
+        .attr("y", 20)
+        .text("Quantile");
 }
 
 function drawLegend() {
