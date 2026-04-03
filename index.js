@@ -1,5 +1,6 @@
 const width = 700;
 const height = 400;
+let locked = false;
 
 const svg = d3.select("#lineChart");
 const dotSvg = d3.select("#dotPlot");
@@ -212,20 +213,81 @@ function drawDotPlot(data) {
         .domain(d3.extent(data, d => d.value))
         .range([50, width - 50]);
 
+    // dotSvg.selectAll("circle")
+    //     .data(data)
+    //     .join("circle")
+    //     .attr("class", "dot")
+    //     .transition()
+    //     .duration(500)
+    //     .attr("cx", d => x(d.value))
+    //     .attr("cy", d => 150 - d.quantile * 120)
+    //     .attr("r", d => d.quantile === 0.5 ? 7 : 4)
+    //     .attr("fill", d => {
+    //       if (d.quantile === 0.5) return "#2563eb";
+    //       if (d.quantile < 0.5) return "#93c5fd";
+    //       return "#1e3a8a";
+    //   });
+
+    //adding in point click/freeze interaction
     dotSvg.selectAll("circle")
-        .data(data)
-        .join("circle")
-        .attr("class", "dot")
-        .transition()
-        .duration(500)
-        .attr("cx", d => x(d.value))
-        .attr("cy", d => 150 - d.quantile * 120)
-        .attr("r", d => d.quantile === 0.5 ? 7 : 4)
-        .attr("fill", d => {
-          if (d.quantile === 0.5) return "#2563eb";
-          if (d.quantile < 0.5) return "#93c5fd";
-          return "#1e3a8a";
-      });
+    .data(data)
+    .join("circle")
+    .attr("class", "dot")
+    .attr("cx", d => x(d.value))
+    .attr("cy", d => 150 - d.quantile * 120)
+    .attr("r", d => d.quantile === 0.5 ? 7 : 4)
+
+    // hover
+    .on("mouseover", function (event, d) {
+        if (locked) return;
+
+        d3.select(this).attr("stroke", "black");
+
+        tooltip
+            .style("opacity", 1)
+            .html(`
+                <strong>Quantile: ${d.quantile}</strong><br>
+                Value: ${Math.round(d.value)}
+            `)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
+    })
+
+    .on("mouseout", function () {
+        if (locked) return;
+
+        d3.select(this).attr("stroke", null);
+        tooltip.style("opacity", 0);
+    })
+
+    //click to freeze/unfreeze
+    .on("click", function (event, d) {
+
+        locked = !locked;
+
+        if (locked) {
+            // Highlight selected point
+            dotSvg.selectAll("circle").attr("stroke", null);
+
+            d3.select(this)
+                .attr("stroke", "black")
+                .attr("stroke-width", 2);
+
+            tooltip
+                .style("opacity", 1)
+                .html(`
+                    <strong>Quantile: ${d.quantile}</strong><br>
+                    Value: ${Math.round(d.value)}
+                `)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 20) + "px");
+
+        } else {
+            // Unfreeze
+            d3.select(this).attr("stroke", null);
+            tooltip.style("opacity", 0);
+        }
+    });
 
     dotSvg.append("g")
         .attr("transform", `translate(0,150)`)
