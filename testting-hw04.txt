@@ -22,5 +22,6 @@ Observations:
 Adjustment: 
 
 - Added a legend explaining quantiles and uncertainty range
+- And descriptions
 
 

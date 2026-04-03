@@ -220,7 +220,12 @@ function drawDotPlot(data) {
         .duration(500)
         .attr("cx", d => x(d.value))
         .attr("cy", d => 150 - d.quantile * 120)
-        .attr("r", d => d.quantile === 0.5 ? 7 : 4);
+        .attr("r", d => d.quantile === 0.5 ? 7 : 4)
+        .attr("fill", d => {
+          if (d.quantile === 0.5) return "#2563eb";
+          if (d.quantile < 0.5) return "#93c5fd";
+          return "#1e3a8a";
+      });
 
     dotSvg.append("g")
         .attr("transform", `translate(0,150)`)
@@ -242,6 +247,7 @@ function drawDotPlot(data) {
         .attr("x", 10)
         .attr("y", 20)
         .text("Quantile");
+
 }
 
 function drawLegend() {
