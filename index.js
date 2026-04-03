@@ -1,5 +1,6 @@
 const width = 700;
 const height = 400;
+const margin = { top: 20, right: 30, bottom: 50, left: 70 };
 let locked = false;
 
 const svg = d3.select("#lineChart");
@@ -93,13 +94,20 @@ function drawLineChart(data) {
         high: highMap.get(d.target_end_date)
     })).sort((a, b) => a.date - b.date);
 
+    // const x = d3.scaleTime()
+    //     .domain(d3.extent(areaData, d => d.date))
+    //     .range([50, width - 50]);
+
+    // const y = d3.scaleLinear()
+    //     .domain([0, d3.max(areaData, d => d.high)])
+    //     .range([height - 50, 20]);
     const x = d3.scaleTime()
-        .domain(d3.extent(areaData, d => d.date))
-        .range([50, width - 50]);
+      .domain(d3.extent(areaData, d => d.date))
+      .range([margin.left, width - margin.right]);
 
     const y = d3.scaleLinear()
-        .domain([0, d3.max(areaData, d => d.high)])
-        .range([height - 50, 20]);
+      .domain([0, d3.max(areaData, d => d.high)])
+      .range([height - margin.bottom, margin.top]);
 
     const area = d3.area()
         .x(d => x(d.date))
@@ -121,7 +129,7 @@ function drawLineChart(data) {
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("x", -height / 2)
-        .attr("y", 15)
+        .attr("y", 20)
         .attr("text-anchor", "middle")
         .text("Cumulative Deaths");
 
@@ -151,13 +159,20 @@ function drawLineChart(data) {
         .attr("stroke-dashoffset", 0);
 
     // Axes
+    // svg.append("g")
+    //     .attr("transform", `translate(0,${height - 50})`)
+    //     .call(d3.axisBottom(x));
+
+    // svg.append("g")
+    //     .attr("transform", `translate(50,0)`)
+    //     .call(d3.axisLeft(y));
     svg.append("g")
-        .attr("transform", `translate(0,${height - 50})`)
-        .call(d3.axisBottom(x));
+      .attr("transform", `translate(0,${height - margin.bottom})`)
+      .call(d3.axisBottom(x));
 
     svg.append("g")
-        .attr("transform", `translate(50,0)`)
-        .call(d3.axisLeft(y));
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y));
 
     // Crosshair line
     const focusLine = svg.append("line")
