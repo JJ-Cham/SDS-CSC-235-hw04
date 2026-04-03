@@ -332,6 +332,11 @@ function drawLegend() {
     const legend = d3.select("#legend");
     legend.selectAll("*").remove();
 
+    legend.append("h3")
+    .text("Legend")
+    .style("margin-bottom", "10px");
+
+
     const items = [
         { label: "Median (0.5)", color: "#2563eb", type: "line" },
         { label: "Uncertainty (0.025–0.975)", color: "#93c5fd", type: "area" }

@@ -75,3 +75,26 @@ text {
     fill: #93c5fd;
     opacity: 0.4;
 }
+
+#layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+#charts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sidebar {
+    width: 250px;
+    text-align: left;
+}
+
+#legend {
+    margin-bottom: 20px;
+}

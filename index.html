@@ -25,11 +25,32 @@
       <h2>How Forecasted Deaths Change Across Time with Uncertainty</h2>
         <svg id="lineChart" width="700" height="400"></svg>
 
-        <!-- Legend goes here -->
-        <div id="legend"></div>
+        <h2>Distribution of Forecast Uncertainty (Quantiles)</h2>
+        <svg id="dotPlot" width="700" height="200"></svg>
+    </div>
+
+    <div id="layout">
+    <!-- <div id="charts">
+        <h2>How Forecasted Deaths Change Across Time with Uncertainty</h2>
+        <svg id="lineChart" width="700" height="400"></svg>
 
         <h2>Distribution of Forecast Uncertainty (Quantiles)</h2>
         <svg id="dotPlot" width="700" height="200"></svg>
+    </div> -->
+
+        <div id="sidebar">
+            <div id="legend"></div>
+
+            <div id="quantileExplanation">
+                <h3>Understanding the Quantile Distribution</h3>
+                <p>
+                    Each dot represents a predicted value at a specific quantile.
+                    Lower quantiles reflect more pessimistic forecasts, while higher
+                    quantiles reflect more optimistic ones. The median (0.5) is the
+                    central prediction used in the line chart above.
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Tooltip (ONLY ONE) -->
