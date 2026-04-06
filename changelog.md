@@ -4,6 +4,7 @@ In order to receive a regrade on this submission you **must** fully answer the f
 
 ## 1. Clearly list all changes you made from your last submission to this submission.
 
+- CSS is already a seperate file
 
 
 ## 2. Reflect on your experience prioritizing, working on, and completing this assignment. Moving forward, what changes will you make in these areas to work towards better first submissions of assignments? 

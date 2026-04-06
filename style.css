@@ -98,3 +98,11 @@ text {
 #legend {
     margin-bottom: 20px;
 }
+#tooltip {
+    position: absolute;
+    opacity: 0;
+    background: white;
+    border: 1px solid black;
+    padding: 5px;
+    pointer-events: none;
+}

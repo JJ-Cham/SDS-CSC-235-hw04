@@ -2,15 +2,20 @@ JJ Cham
 CSC-235
 HW #4
 
-Task 1:
+Task #1: 
 
-- Identify how the predicted number of cumulative COVID-19 deaths
-for a specific future date changes across different forecast dates.
+Select a specific target date (e.g., June 1, 2020). Using the dropdown, 
+compare how the predicted cumulative deaths for that date changes across different 
+forecast issue dates.
 
-Task 2:
+Question: Does the prediction increase, decrease, or stay stable over time?
 
-- Compare the uncertainty range (difference between lower and upper quantiles) 
-across forecast dates and determine when predictions became more or less certain.
+Task #2: 
+
+For the same target date, examine the uncertainty range (shaded region between lower and upper quantiles) 
+across different forecast issue dates.
+
+Question: During which forecast dates is the uncertainty widest (least certain) and narrowest (most certain)?
 
 
 Observations:
@@ -23,5 +28,3 @@ Adjustment:
 
 - Added a legend explaining quantiles and uncertainty range
 - And descriptions
-
-
