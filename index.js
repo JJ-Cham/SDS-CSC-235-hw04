@@ -321,9 +321,11 @@ function drawDotPlot(data) {
     .text("Predicted Deaths");
 
     dotSvg.append("text")
-        .attr("x", 10)
-        .attr("y", 20)
-        .text("Quantile");
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height / 2 +100)
+    .attr("y", 20)
+    .attr("text-anchor", "middle")
+    .text("Quantile");
 
 }
 
