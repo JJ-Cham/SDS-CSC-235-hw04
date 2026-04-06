@@ -1,7 +1,7 @@
 const width = 700;
 const height = 400;
 const margin = { top: 20, right: 30, bottom: 50, left: 70 };
-let locked = false;
+let selectedPoint = null;
 
 const svg = d3.select("#lineChart");
 const dotSvg = d3.select("#dotPlot");
@@ -254,7 +254,7 @@ function drawDotPlot(data) {
 
     // hover
     .on("mouseover", function (event, d) {
-        if (locked) return;
+        if (selectedPoint) return;
 
         d3.select(this).attr("stroke", "black");
 
@@ -269,39 +269,69 @@ function drawDotPlot(data) {
     })
 
     .on("mouseout", function () {
-        if (locked) return;
+        if (selectedPoint) return;
 
         d3.select(this).attr("stroke", null);
         tooltip.style("opacity", 0);
     })
 
     //click to freeze/unfreeze
+    // .on("click", function (event, d) {
+
+    //     locked = !locked;
+
+    //     if (locked) {
+    //         // Highlight selected point
+    //         dotSvg.selectAll("circle").attr("stroke", null);
+
+    //         d3.select(this)
+    //             .attr("stroke", "black")
+    //             .attr("stroke-width", 2);
+
+    //         tooltip
+    //             .style("opacity", 1)
+    //             .html(`
+    //                 <strong>Quantile: ${d.quantile}</strong><br>
+    //                 Value: ${Math.round(d.value)}
+    //             `)
+    //             .style("left", (event.pageX + 10) + "px")
+    //             .style("top", (event.pageY - 20) + "px");
+
+    //     } else {
+    //         // Unfreeze
+    //         d3.select(this).attr("stroke", null);
+    //         tooltip.style("opacity", 0);
+    //     }
+    // });
     .on("click", function (event, d) {
 
-        locked = !locked;
-
-        if (locked) {
-            // Highlight selected point
-            dotSvg.selectAll("circle").attr("stroke", null);
-
-            d3.select(this)
-                .attr("stroke", "black")
-                .attr("stroke-width", 2);
-
-            tooltip
-                .style("opacity", 1)
-                .html(`
-                    <strong>Quantile: ${d.quantile}</strong><br>
-                    Value: ${Math.round(d.value)}
-                `)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 20) + "px");
-
-        } else {
-            // Unfreeze
+        // If clicking the SAME point → unselect
+        if (selectedPoint === this) {
             d3.select(this).attr("stroke", null);
             tooltip.style("opacity", 0);
+            selectedPoint = null;
+            return;
         }
+
+        // Otherwise → select new point
+        selectedPoint = this;
+
+        // Clear all others
+        dotSvg.selectAll("circle").attr("stroke", null);
+
+        // Highlight this one
+        d3.select(this)
+            .attr("stroke", "black")
+            .attr("stroke-width", 2);
+
+        tooltip
+            .style("opacity", 1)
+            .html(`
+                <strong>Quantile: ${d.quantile}</strong><br>
+                Value: ${Math.round(d.value)}
+            `)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
     });
 
     dotSvg.append("g")
@@ -312,7 +342,7 @@ function drawDotPlot(data) {
         .attr("x", width / 2)
         .attr("y", 20)
         .attr("text-anchor", "middle")
-        .text("Quantile Distribution");
+        .text("Uncertainty Distribution (Quantiles)");
 
     dotSvg.append("text")
     .attr("x", width / 2)

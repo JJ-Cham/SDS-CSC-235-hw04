@@ -4,7 +4,7 @@ HW #4
 
 Task #1: 
 
-Select a specific target date (e.g., June 1, 2020). Using the dropdown, 
+Select a specific target date (e.g., May, 10 2020). Using the dropdown, 
 compare how the predicted cumulative deaths for that date changes across different 
 forecast issue dates.
 

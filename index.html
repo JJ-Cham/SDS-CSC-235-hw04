@@ -14,7 +14,7 @@
     <p>
       This visualization explores how forecasts of cumulative COVID-19 deaths in the United States changed over time.
       The solid line represents the median prediction, while the shaded region shows uncertainty (2.5th–97.5th percentile range).
-      Use the dropdown or play button to see how predictions evolved across forecast dates.
+      Use the dropdown to see how predictions evolved across forecast dates.
     </p>
 
     <label for="dateSelect"><strong>Select Forecast Date (Model Run):</strong></label>
@@ -46,12 +46,17 @@
                     Each dot represents a predicted value at a specific quantile.
                     Lower quantiles reflect more pessimistic forecasts, while higher
                     quantiles reflect more optimistic ones. The median (0.5) is the
-                    central prediction used in the line chart above.
+                    central prediction used in the line chart above. 
                 </p>
             </div>
         </div>
     </div>
- 
+    
+    <p>
+        This tool is designed to help users understand how forecasted COVID-19 deaths and their associated uncertainty change over time. 
+        By comparing predictions across forecast dates, 
+        users can identify whether models become more or less certain and how estimates shift as new data became available.
+    </p>
     <div id="tooltip"></div>
 
     <script src="index.js"></script>
