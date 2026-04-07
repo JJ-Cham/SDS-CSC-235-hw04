@@ -46,4 +46,4 @@ _**YES**_ 1 pt: Browser compiles code with no errors
 
 _**YES**_ 1 pt: Interactive components execute fully and consistently with no errors
 
-_**NO**_ Changelog: Completed `changelog.md` included with submission
+_**YES**_ Changelog: Completed `changelog.md` included with submission
